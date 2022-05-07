@@ -1,4 +1,4 @@
-const Message = require('../../models/message')
+const contact_message = require('../../models/contact_message')
 
 const postMessage = async (req, res) => {
 
@@ -12,7 +12,7 @@ const postMessage = async (req, res) => {
       }
   
       // Create user in our database
-      const msg = await Message.create({
+      const msg = await contact_message.create({
         username,
         email: email.toLowerCase(), // sanitize: convert email to lowercase
         message,

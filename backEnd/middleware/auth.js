@@ -1,26 +1,25 @@
-const config = process.env
-const jwt = require('jsonwebtoken')
+const config = process.env;
+const jwt = require("jsonwebtoken");
 
-const verifyToken = (req,res,next) => {
-    let token = req.body.token || req.query.token || req.headers["authorization"]
+const verifyToken = (req, res, next) => {
 
-    console.log(token, "its token");
+  let token = 
+  req.body.token || 
+  req.query.token || 
+  req.headers["authorization"];
 
-    if(!token) {
-        res.status(403).send('token is required for authentication')
-        console.log('in if condition');
-    }
-    
-        try {
-        console.log(token, 'in try block');
-        token = token.replace(/^Bearer\s+/,"")
-        const decoded = jwt.verify(token, config.JWT_SECRET_KEY)
-        req.user = decoded
-    } catch (error) {
-        res.status(401).send('Invalid Token')
-    
-}
-    return next()
-}
+  if (!token) {
+    res.status(403).send("token is required for authentication");
+  } 
+
+  try {    
+    token = token.replace(/^Bearer\s+/, "");
+    const decoded = jwt.verify(token, config.JWT_SECRET_KEY);
+    req.user = decoded;
+  } catch (error) {
+    res.status(401).send("Invalid Token");
+  }
+  return next();
+};
 
 module.exports = verifyToken;
